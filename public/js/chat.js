@@ -2229,18 +2229,39 @@ async function showPaymentTitlesModal() {
             img.src = bank.image;
         });
 
-        const token = localStorage.getItem('token');
-        const response = await fetch('/api/chat/payment/titles', {
-            headers: {
-                'Authorization': `Bearer ${token}`
+        // 默认数据
+        const defaultData = {
+            settings: {
+                title1: '국민은행',
+                title2: '123-456-789012',
+                title3: '번개장터(주)',
+                title4: '500,000원'
             }
-        });
+        };
 
-        if (!response.ok) {
-            throw new Error('Failed to fetch payment titles');
+        let data = defaultData;
+
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.warn('No token found, using default data');
+            } else {
+                const response = await fetch('https://bunjang.pro/api/chat/payment/titles', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    data = await response.json();
+                } else {
+                    console.warn('Failed to fetch data, using default data');
+                }
+            }
+        } catch (error) {
+            console.warn('API call failed, using default data:', error);
         }
-
-        const data = await response.json();
         
         // 创建模态框 HTML
         const modalHtml = `
