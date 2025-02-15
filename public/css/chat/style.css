@@ -1132,7 +1132,7 @@ body.admin-mode .chat-header .online-count {
     align-items: flex-start;
     flex: 1;
     overflow-y: auto;
-    padding-bottom: min(24px, calc(24 * 100vh / 896));
+    padding-bottom: max(24px, calc(24px + var(--safe-area-inset-bottom)));
 }
 
 #paymentTitlesModal .main-title {
@@ -1170,11 +1170,17 @@ body.admin-mode .chat-header .online-count {
 
 #paymentTitlesModal .payment-actions {
     width: 100%;
-    padding: min(24px, calc(24 * 100vh / 896)) 0 0 0;
+    padding: min(24px, calc(24px * 100vh / 896)) min(20px, calc(20px * 100vw / 414)) max(24px, calc(24px + var(--safe-area-inset-bottom)));
     display: flex;
     justify-content: center;
-    gap: min(12px, calc(12 * 100vw / 414));
+    gap: min(12px, calc(12px * 100vw / 414));
     margin-top: auto;
+    background: white;
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
 }
 
 #paymentTitlesModal .deposit-button {
@@ -1250,6 +1256,18 @@ body.admin-mode .chat-header .online-count {
         font-size: 0.813rem;
         padding: 0.625rem 0;
     }
+
+    #paymentTitlesModal .modal-content.payment-modal {
+        height: 100vh;
+    }
+    
+    #paymentTitlesModal .modal-body {
+        padding-bottom: max(16px, calc(16px + var(--safe-area-inset-bottom)));
+    }
+    
+    #paymentTitlesModal .payment-actions {
+        padding-bottom: max(16px, calc(16px + var(--safe-area-inset-bottom)));
+    }
 }
 
 @media screen and (min-width: 321px) and (max-width: 375px) {
@@ -1270,7 +1288,7 @@ body.admin-mode .chat-header .online-count {
 @media screen and (min-width: 376px) and (max-width: 511px) {
     #paymentTitlesModal .modal-content.payment-modal {
         width: 100%;
-        height: 100%;
+        height: 100vh;
     }
 }
 
@@ -1278,11 +1296,16 @@ body.admin-mode .chat-header .online-count {
     #paymentTitlesModal .modal-content.payment-modal {
         width: var(--chat-width);
         height: var(--chat-height);
-        border-radius: 0;
+        max-height: 90vh;
+        border-radius: 1rem;
     }
-
-    #paymentTitlesModal .payment-table {
-        width: 85%;
+    
+    #paymentTitlesModal .modal-body {
+        padding-bottom: 24px;
+    }
+    
+    #paymentTitlesModal .payment-actions {
+        padding: 24px;
     }
 }
 
